@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 
     # First party apps
     'users',
+    'habits',
 ]
 
 MIDDLEWARE = [
