@@ -43,6 +43,10 @@ INSTALLED_APPS = [
 
     # Third party apps
     'rest_framework',
+    'rest_framework_simplejwt',
+    'corsheaders',
+    'drf_yasg',
+    # 'django_celery_beat',
 
     # First party apps
     'users',
@@ -142,3 +146,44 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.User'
+
+
+# settings JWT token
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+        # для тестов отключаем IsAuthenticated
+        # 'rest_framework.permissions.AllowAny',
+    ]
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+}
+
+# CORS settings
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:8000',
+    ]
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:8000',
+    ]
+
+# Celery settings
+CELERY_BROKER_URL = getenv('CELERY_BROKER_URL')
+CELERY_RESULT_BACKEND = getenv('CELERY_RESULT_BACKEND')
+CELERY_TIMEZONE = "UTC"
+
+CELERY_BEAT_SCHEDULE = {
+    'task-name': {
+        'task': 'habits.tasks.send_reminder_about_habit',
+        'schedule': timedelta(days=1)
+    }
+}
+
+TELEGRAM_TOKEN = getenv("TELEGRAM_TOKEN")
