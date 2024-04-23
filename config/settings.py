@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'corsheaders',
     'drf_yasg',
-    # 'django_celery_beat',
+    'django_celery_beat',
 
     # First party apps
     'users',
@@ -93,6 +93,8 @@ DATABASES = {
         'NAME': getenv('DB_NAME'),
         'USER': getenv('DB_USER'),
         'PASSWORD': getenv('DB_PASSWORD'),
+        'PORT':  5432,
+        'HOST': 'db'
     }
 }
 
