@@ -6,6 +6,8 @@ services:
     image: redis
     ports:
       - '6379:6379'
+    env_file:
+      - .env
 
   db:
     image: postgres
